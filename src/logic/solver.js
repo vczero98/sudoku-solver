@@ -55,16 +55,34 @@ const pencilValues = (originalBoard) => {
 const penSinglePencilValues = (originalBoard) => {
   const board = new Board(originalBoard);
 
-  for (let x = 0; x < 9; x++) {
-    for (let y = 0; y < 9; y++) {
-      const square = board.getSquare(x, y);
-      if (
-        square.value == null &&
-        square.pen == null &&
-        square.pencil.length == 1
-      ) {
-        board.addPen(x, y, square.pencil[0]);
-        board.removePencil(x, y);
+  // We keep repeating this, until no single values remain
+  let identifiedValue = true;
+
+  while (identifiedValue) {
+    identifiedValue = false;
+
+    for (let x = 0; x < 9; x++) {
+      for (let y = 0; y < 9; y++) {
+        const square = board.getSquare(x, y);
+
+        if (
+          square.value == null &&
+          square.pen == null &&
+          square.pencil.length == 1
+        ) {
+          const number = square.pencil[0];
+
+          // Add pen
+          board.addPen(x, y, number);
+
+          // Remove this number from row, column and block
+          board.getRow(x).forEach((square) => square.removePencil(number));
+          board.getColumn(y).forEach((square) => square.removePencil(number));
+          board.getBlock(x, y).forEach((square) => square.removePencil(number));
+
+          // A value has changed, therefore we repeat this process
+          identifiedValue = true;
+        }
       }
     }
   }
@@ -81,6 +99,9 @@ const solve = (originalBoard) => {
   // Pen in values that only have one pencil
   const pennedBoard = penSinglePencilValues(pencilledBoard);
 
+  return pennedBoard;
+
+  /*
   // Check if the board is solved
   if (pennedBoard.isSolved()) {
     return pennedBoard;
@@ -120,6 +141,7 @@ const solve = (originalBoard) => {
   }
 
   return false;
+  */
 };
 
 const Solver = { pencilValues, penSinglePencilValues, solve };
