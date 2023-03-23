@@ -21,7 +21,7 @@ test("pencils in values", () => {
   board.addPencil(2, 0, 2);
   board.addPencil(2, 0, 3);
 
-  // Check if values have been penciled in correctly
+  // Check if values have been pencilled in correctly
   expect(board.hasPencil(2, 0, 1)).toBeTruthy();
   expect(board.hasPencil(2, 0, 2)).toBeTruthy();
   expect(board.hasPencil(2, 0, 3)).toBeTruthy();
@@ -124,6 +124,9 @@ test("creates board fully filled with pens", () => {
   }
 
   expect(board.isFullyFilled()).toBeTruthy();
+
+  board.removePen(3, 5);
+  expect(board.isFullyFilled()).toBeFalsy();
 });
 
 test("creates board fully filled with values", () => {
@@ -136,6 +139,9 @@ test("creates board fully filled with values", () => {
   }
 
   expect(board.isFullyFilled()).toBeTruthy();
+
+  board.removeValue(3, 5);
+  expect(board.isFullyFilled()).toBeFalsy();
 });
 
 test("creates board not fully filled", () => {

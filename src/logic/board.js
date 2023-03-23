@@ -1,3 +1,5 @@
+const Square = require("./square");
+
 const Board = class {
   // Construct new board
   constructor(board) {
@@ -10,24 +12,17 @@ const Board = class {
       for (let j = 0; j < 9; j++) {
         if (board) {
           // Create from existing board
-          this.squares[i][j] = {
-            ...board.squares[i][j],
-            pencil: [...board.squares[i][j].pencil],
-          };
+          this.squares[i][j] = new Square(board.squares[i][j]);
         } else {
           // New board
-          this.squares[i][j] = {
-            value: null, // The default, given value of the square
-            pen: null, // The solved value of the square
-            pencil: [], // The potential values of the square
-          };
+          this.squares[i][j] = new Square();
         }
       }
     }
   }
 
-  isValidNumber(n) {
-    return !isNaN(n) && n >= 1 && n <= 9;
+  isValidCoordinate(n) {
+    return !isNaN(n) && n >= 0 && n < 9;
   }
 
   // Get the state of a given square on the board
@@ -37,84 +32,57 @@ const Board = class {
 
   // Pencil in a potential value
   addPencil(x, y, value) {
-    if (
-      !this.isValidNumber(value) ||
-      !this.isValidNumber(x + 1) ||
-      !this.isValidNumber(y + 1)
-    ) {
+    if (!this.isValidCoordinate(x) || !this.isValidCoordinate(y)) {
       return false;
     }
 
-    this.removePencil(x, y, value); // Make sure there are no duplicates
-    this.squares[x][y].pencil = [...this.squares[x][y].pencil, value];
-
-    return true;
+    return this.squares[x][y].addPencil(value);
   }
 
-  // Erase a pontential penciled value
+  // Erase a pontential pencilled value
   removePencil(x, y, value) {
-    if (value) {
-      // Remove single value
-      this.squares[x][y].pencil = this.squares[x][y].pencil.filter(
-        (v) => v != value
-      );
-    } else {
-      // Remove all values
-      this.squares[x][y].pencil = [];
+    if (!this.isValidCoordinate(x) || !this.isValidCoordinate(y)) {
+      return false;
     }
 
-    return true;
+    return this.squares[x][y].removePencil(value);
   }
 
-  // Check whether a square has a value penciled in
+  // Check whether a square has a value pencilled in
   hasPencil(x, y, value) {
-    return this.squares[x][y].pencil.includes(value);
+    return this.squares[x][y].hasPencil(value);
   }
 
   // Add solved pen value
   addPen(x, y, value) {
-    if (
-      !this.isValidNumber(value) ||
-      !this.isValidNumber(x + 1) ||
-      !this.isValidNumber(y + 1)
-    ) {
+    if (!this.isValidCoordinate(x) || !this.isValidCoordinate(y)) {
       return false;
     }
 
-    this.squares[x][y].pen = value;
-
-    return true;
+    return this.squares[x][y].addPen(value);
   }
 
   // Remove solved pen value
   removePen(x, y) {
-    this.squares[x][y].pen = null;
-    return true;
+    if (!this.isValidCoordinate(x) || !this.isValidCoordinate(y)) {
+      return false;
+    }
+
+    return this.squares[x][y].removePen();
   }
 
   // Add a given starting value
   addValue(x, y, value) {
-    if (
-      !this.isValidNumber(value) ||
-      !this.isValidNumber(x + 1) ||
-      !this.isValidNumber(y + 1)
-    ) {
+    if (!this.isValidCoordinate(x) || !this.isValidCoordinate(y)) {
       return false;
     }
 
-    if (!this.squares[x][y]) {
-      console.log(x, y, this.squares[x][y]);
-    }
-    this.squares[x][y].value = value;
-
-    return true;
+    return this.squares[x][y].addValue(value);
   }
 
   // Remove a given starting value
   removeValue(x, y) {
-    this.squares[x][y].value = null;
-
-    return true;
+    return this.squares[x][y].removeValue(x, y);
   }
 
   // Whether each square has a value or pen
@@ -123,8 +91,8 @@ const Board = class {
       for (let j = 0; j < 9; j++) {
         const square = this.squares[i][j];
         if (
-          (square.value == null || !this.isValidNumber(square.value)) &&
-          (square.pen == null || !this.isValidNumber(square.pen))
+          (square.value == null || !square.isValidNumber(square.value)) &&
+          (square.pen == null || !square.isValidNumber(square.pen))
         ) {
           return false;
         }
