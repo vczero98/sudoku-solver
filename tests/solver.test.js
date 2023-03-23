@@ -281,9 +281,6 @@ test("solves hard board", () => {
 
   const solvedBoard = Solver.solve(originalBoard);
 
-  console.log(originalBoard.stateToString());
-  console.log(solvedBoard.stateToString());
-
   expect(originalBoard.isSolved()).toBeFalsy();
   expect(solvedBoard.isSolved()).toBeTruthy();
 });
