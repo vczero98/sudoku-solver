@@ -110,4 +110,74 @@ const createSolvedTestBoard = () => {
   return board;
 };
 
-module.exports = { createTestBoard, createSolvedTestBoard };
+const createTestBoardMedium = () => {
+  const board = new Board();
+
+  board.addValue(0, 4, 3);
+  board.addValue(0, 5, 2);
+  board.addValue(0, 7, 5);
+  board.addValue(0, 8, 7);
+  board.addValue(1, 2, 8);
+  board.addValue(1, 7, 9);
+  board.addValue(2, 5, 6);
+  board.addValue(2, 8, 4);
+  board.addValue(3, 2, 1);
+  board.addValue(3, 3, 9);
+  board.addValue(3, 4, 8);
+  board.addValue(3, 5, 4);
+  board.addValue(3, 7, 7);
+  board.addValue(3, 8, 2);
+  board.addValue(4, 0, 6);
+  board.addValue(4, 3, 2);
+  board.addValue(5, 0, 8);
+  board.addValue(5, 3, 6);
+  board.addValue(5, 6, 5);
+  board.addValue(5, 7, 4);
+  board.addValue(5, 8, 9);
+  board.addValue(6, 0, 9);
+  board.addValue(6, 4, 7);
+  board.addValue(6, 5, 8);
+  board.addValue(6, 8, 5);
+  board.addValue(7, 1, 7);
+  board.addValue(7, 3, 5);
+  board.addValue(7, 4, 6);
+
+  return board;
+};
+
+const createTestBoardHard = () => {
+  const board = new Board();
+
+  board.addValue(0, 1, 6);
+  board.addValue(0, 2, 5);
+  board.addValue(0, 3, 2);
+  board.addValue(0, 5, 9);
+  board.addValue(0, 6, 3);
+  board.addValue(1, 1, 8);
+  board.addValue(1, 8, 1);
+  board.addValue(2, 4, 6);
+  board.addValue(3, 2, 6);
+  board.addValue(3, 4, 3);
+  board.addValue(4, 1, 5);
+  board.addValue(4, 3, 6);
+  board.addValue(4, 5, 4);
+  board.addValue(4, 7, 8);
+  board.addValue(5, 4, 7);
+  board.addValue(5, 6, 4);
+  board.addValue(6, 5, 7);
+  board.addValue(7, 2, 2);
+  board.addValue(7, 3, 4);
+  board.addValue(7, 5, 5);
+  board.addValue(7, 6, 9);
+  board.addValue(8, 0, 9);
+  board.addValue(8, 7, 3);
+
+  return board;
+};
+
+module.exports = {
+  createTestBoard,
+  createSolvedTestBoard,
+  createTestBoardMedium,
+  createTestBoardHard,
+};

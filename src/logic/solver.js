@@ -90,18 +90,7 @@ const penSinglePencilValues = (originalBoard) => {
   return board;
 };
 
-const solve = (originalBoard) => {
-  const board = new Board(originalBoard);
-
-  // Pencil in potential values
-  const pencilledBoard = pencilValues(board);
-
-  // Pen in values that only have one pencil
-  const pennedBoard = penSinglePencilValues(pencilledBoard);
-
-  return pennedBoard;
-
-  /*
+const _solvePennedBoard = (pennedBoard) => {
   // Check if the board is solved
   if (pennedBoard.isSolved()) {
     return pennedBoard;
@@ -119,9 +108,20 @@ const solve = (originalBoard) => {
 
         // Here we create new boards by penning in the pencilled values
         const newPotentialBoards = pencilledValues.map((pencilledValue) => {
-          const newPotentialBoard = new Board(board);
-          board.removePencil(x, y);
-          board.addPen(pencilledValue);
+          const newPotentialBoard = new Board(pennedBoard);
+
+          // Remove this number from row, column and block
+          newPotentialBoard
+            .getRow(x)
+            .forEach((square) => square.removePencil(pencilledValue));
+          newPotentialBoard
+            .getColumn(y)
+            .forEach((square) => square.removePencil(pencilledValue));
+          newPotentialBoard
+            .getBlock(x, y)
+            .forEach((square) => square.removePencil(pencilledValue));
+
+          newPotentialBoard.addPen(x, y, pencilledValue);
           return newPotentialBoard;
         });
 
@@ -141,7 +141,18 @@ const solve = (originalBoard) => {
   }
 
   return false;
-  */
+};
+
+const solve = (originalBoard) => {
+  const board = new Board(originalBoard);
+
+  // Pencil in potential values
+  const pencilledBoard = pencilValues(board);
+
+  // Pen in values that only have one pencil
+  const pennedBoard = penSinglePencilValues(pencilledBoard);
+
+  return _solvePennedBoard(pennedBoard);
 };
 
 const Solver = { pencilValues, penSinglePencilValues, solve };

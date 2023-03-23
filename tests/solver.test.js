@@ -1,6 +1,10 @@
 const Board = require("../src/logic/board");
 const Solver = require("../src/logic/solver");
-const { createTestBoard } = require("./test-boards");
+const {
+  createTestBoard,
+  createTestBoardHard,
+  createTestBoardMedium,
+} = require("./test-boards");
 
 test("pencils in values on board", () => {
   const originalBoard = createTestBoard();
@@ -259,12 +263,38 @@ test("solves board", () => {
 
   const solvedBoard = Solver.solve(originalBoard);
 
+  expect(originalBoard.isSolved()).toBeFalsy();
+  expect(solvedBoard.isSolved()).toBeTruthy();
+});
+
+test("solves medium board", () => {
+  const originalBoard = createTestBoardMedium();
+
+  const solvedBoard = Solver.solve(originalBoard);
+
+  expect(originalBoard.isSolved()).toBeFalsy();
+  expect(solvedBoard.isSolved()).toBeTruthy();
+});
+
+test("solves hard board", () => {
+  const originalBoard = createTestBoardHard();
+
+  const solvedBoard = Solver.solve(originalBoard);
+
   console.log(originalBoard.stateToString());
   console.log(solvedBoard.stateToString());
 
   expect(originalBoard.isSolved()).toBeFalsy();
   expect(solvedBoard.isSolved()).toBeTruthy();
-  // console.log(board.getSquare(0, 6));
+});
 
-  // TODO: Values not pencilled in?
+test("attempts to solve unsolvable board", () => {
+  const originalBoard = createTestBoardMedium();
+
+  originalBoard.addValue(2, 2, 7);
+
+  const solvedBoard = Solver.solve(originalBoard);
+
+  expect(originalBoard.isSolved()).toBeFalsy();
+  expect(solvedBoard).toBe(false);
 });
