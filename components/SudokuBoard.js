@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
 
 const Table = styled.table`
@@ -25,12 +25,7 @@ const TD = styled.td`
   text-align: center;
   vertical-align: center;
   position: relative;
-  /* border: 2px white solid; */
-  /* height: calc(100% / 9); */
-  /* height: 100%; */
   height: 20px;
-  /* background-color: rgba(255, 255, 255, ${({ isValue }) =>
-    isValue ? 0.2 : 0}; */
 
   &:not(:first-child) {
     border-left: 1px solid rgba(255, 255, 255, 0.5);
@@ -56,12 +51,13 @@ const SquareButton = styled.button`
   position: absolute;
   top: 0;
   left: 0;
+  color: rgba(255, 255, 255, 0.5);
+
   ${({ isValue }) =>
     isValue &&
     css`
-      /* text-shadow: 0px 4px 3px rgba(0, 255, 0, 0.4),
-        0px 8px 13px rgba(0, 255, 0, 0.1), 0px 18px 23px rgba(0, 255, 0, 0.1); */
-      text-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
     `};
 `;
 
@@ -82,17 +78,6 @@ const SudokuBoard = ({ boardState, onSquareClick }) => {
           ))}
         </TR>
       )),
-    //   [0, 1, 2, 3, 4, 5, 6, 7, 8].map((x) => (
-    //     <TR key={x}>
-    //       {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((y) => (
-    //         <TD key={`${x} ${y}`}>
-    //           <SquareButton onClick={() => onSquareClick(x, y)}>
-    //             {y}
-    //           </SquareButton>
-    //         </TD>
-    //       ))}
-    //     </TR>
-    //   )),
     [boardState, onSquareClick]
   );
 
