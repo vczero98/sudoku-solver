@@ -1,11 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Alkatra&display=swap');
 
+html {
+  position: relative;
+  height: 100vh;
+}
+
 html, body {
-  height: 100%;
   width: 100%;
+  margin: 0;
 }
 
 body {
+  height: 100%;
+  position: absolute;
   font-family: 'Alkatra';
   background: rgb(0,45,98);
   background: linear-gradient(153deg, rgba(0,45,98,1) 0%, rgba(222,49,99,1) 100%);

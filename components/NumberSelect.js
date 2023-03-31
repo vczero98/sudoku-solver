@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 
 const Table = styled.table`
@@ -12,19 +12,32 @@ const Table = styled.table`
 
 const TR = styled.tr`
   &:not(:first-child) {
-    border-top: 5px solid rgba(255, 255, 255, 0.5);
+    border-top: 0.5vh solid rgba(255, 255, 255, 0.5);
+  }
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    &:not(:first-child) {
+      border-top-width: 0.5vw;
+    }
   }
 `;
 
 const TD = styled.td`
-  font-size: 80px;
   text-align: center;
   vertical-align: center;
   height: 20px;
   position: relative;
 
   &:not(:first-child) {
-    border-left: 5px solid rgba(255, 255, 255, 0.5);
+    border-left: 0.5vh solid rgba(255, 255, 255, 0.5);
+  }
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    &:not(:first-child) {
+      border-left-width: 0.5vw;
+    }
   }
 `;
 
@@ -43,6 +56,12 @@ const SquareButton = styled.button`
   position: absolute;
   top: 0;
   left: 0;
+  font-size: 10vh;
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    font-size: 10vw;
+  }
 `;
 
 const NumberSelect = ({ onValueSelect }) => {

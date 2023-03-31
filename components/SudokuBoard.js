@@ -12,11 +12,22 @@ const Table = styled.table`
 
 const TR = styled.tr`
   &:not(:first-child) {
-    border-top: 1px solid rgba(255, 255, 255, 0.5);
+    border-top: 0.1vh solid rgba(255, 255, 255, 0.5);
   }
 
   &:nth-child(3n + 1) {
-    border-width: 5px;
+    border-width: 0.5vh;
+  }
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    &:not(:first-child) {
+      border-top-width: 0.1vw;
+    }
+
+    &:nth-child(3n + 1) {
+      border-width: 0.5vw;
+    }
   }
 `;
 
@@ -28,11 +39,22 @@ const TD = styled.td`
   height: 20px;
 
   &:not(:first-child) {
-    border-left: 1px solid rgba(255, 255, 255, 0.5);
+    border-left: 0.1vh solid rgba(255, 255, 255, 0.5);
   }
 
   &:nth-child(3n + 1) {
-    border-width: 5px;
+    border-width: 0.5vh;
+  }
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    &:not(:first-child) {
+      border-left-width: 0.1vw;
+    }
+
+    &:nth-child(3n + 1) {
+      border-width: 0.5vw;
+    }
   }
 `;
 
@@ -52,6 +74,7 @@ const SquareButton = styled.button`
   top: 0;
   left: 0;
   color: rgba(255, 255, 255, 0.5);
+  font-size: 4vh;
 
   ${({ isValue }) =>
     isValue &&
@@ -59,6 +82,11 @@ const SquareButton = styled.button`
       color: white;
       background: rgba(255, 255, 255, 0.2);
     `};
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    font-size: 4vw;
+  }
 `;
 
 const SudokuBoard = ({ boardState, onSquareClick }) => {

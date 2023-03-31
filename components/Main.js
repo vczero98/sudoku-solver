@@ -6,23 +6,102 @@ import styled from "styled-components";
 import NumberSelect from "./NumberSelect";
 import SudokuBoard from "./SudokuBoard";
 
+const Container = styled.div`
+  height: 100vh;
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+`;
+
 const Title = styled.h1`
   font-size: 50px;
   text-align: center;
   text-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  line-height: 50px;
+  margin: 0;
+  font-size: 10vh;
+
+  /* Landscape */
+  @media (min-aspect-ratio: 16/9) {
+    font-size: 10vh;
+  }
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    font-size: 10vw;
+  }
 `;
 
 const BoardContainer = styled.div`
-  height: 700px;
-  width: 700px;
-  /* padding: 20px; */
+  aspect-ratio: 1;
   background: rgb(255, 255, 255, 0.3);
-  margin: 0 auto;
   border-radius: 5%;
-  position: relative;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   overflow: hidden;
+  height: 60vh;
+
+  /* Landscape */
+  @media (min-aspect-ratio: 16/9) {
+    height: 80%;
+    background: #9af; /* blue */
+  }
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    background: red;
+    height: auto;
+    width: 80%;
+  }
+`;
+
+const HeaderContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  /* top: 5%; */
+  height: 20vh;
+
+  /* Landscape */
+  @media (min-aspect-ratio: 16/9) {
+    top: 0;
+    height: 50%;
+    width: 50%;
+  }
+`;
+
+const BodyContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  right: 0;
+
+  /* Landscape */
+  @media (min-aspect-ratio: 16/9) {
+    width: 50%;
+  }
+`;
+
+const FooterContainer = styled.div`
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 20vh;
+  bottom: 0;
+
+  /* Landscape */
+  @media (min-aspect-ratio: 16/9) {
+    height: 50%;
+    width: 50%;
+  }
 `;
 
 const Main = () => {
@@ -104,20 +183,26 @@ const Main = () => {
   );
 
   return (
-    <>
-      <Title>Sudoku Solver!</Title>
+    <Container>
+      <HeaderContainer>
+        <Title>Sudoku Solver!</Title>
+      </HeaderContainer>
 
-      <BoardContainer>
-        {selectingSquareValue ? (
-          <NumberSelect onValueSelect={onNumberSelectClick} />
-        ) : (
-          <SudokuBoard
-            onSquareClick={onSudokuSquareClick}
-            {...{ boardState }}
-          />
-        )}
-      </BoardContainer>
-    </>
+      <BodyContainer>
+        <BoardContainer>
+          {selectingSquareValue ? (
+            <NumberSelect onValueSelect={onNumberSelectClick} />
+          ) : (
+            <SudokuBoard
+              onSquareClick={onSudokuSquareClick}
+              {...{ boardState }}
+            />
+          )}
+        </BoardContainer>
+      </BodyContainer>
+
+      <FooterContainer>{/* <button>Reset board</button> */}</FooterContainer>
+    </Container>
   );
 };
 
