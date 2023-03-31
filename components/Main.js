@@ -21,11 +21,6 @@ const Title = styled.h1`
   margin: 0;
   font-size: 10vh;
 
-  /* Landscape */
-  @media (min-aspect-ratio: 16/9) {
-    font-size: 10vh;
-  }
-
   /* Portrait */
   @media (max-aspect-ratio: 3/4) {
     font-size: 10vw;
@@ -44,12 +39,10 @@ const BoardContainer = styled.div`
   /* Landscape */
   @media (min-aspect-ratio: 16/9) {
     height: 80%;
-    background: #9af; /* blue */
   }
 
   /* Portrait */
   @media (max-aspect-ratio: 3/4) {
-    background: red;
     height: auto;
     width: 80%;
   }
@@ -61,7 +54,6 @@ const HeaderContainer = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* top: 5%; */
   height: 20vh;
 
   /* Landscape */
@@ -104,17 +96,44 @@ const FooterContainer = styled.div`
   }
 `;
 
+const Button = styled.button`
+  overflow: hidden;
+  word-wrap: break-word;
+  background: none;
+  color: inherit;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  font-size: 5vh;
+  background: rgb(255, 255, 255, 0.3);
+  border-radius: 2vh;
+  padding: 0vh 3vh;
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+
+  /* Portrait */
+  @media (max-aspect-ratio: 3/4) {
+    font-size: 5vw;
+    border-radius: 2vw;
+    padding: 0vh 3vw;
+  }
+`;
+
 const Main = () => {
   const [selectingSquareValue, setSelectingSquareValue] = useState(null);
   const [boardState, setBoardState] = useState(null);
 
   // Generate initial board state
-  useEffect(() => {
+  const initializeBoardState = () => {
     setBoardState(
       [...Array(9).keys()].map((x) =>
         [...Array(9).keys()].map((y) => ({ value: null, pen: null }))
       )
     );
+  };
+
+  useEffect(() => {
+    initializeBoardState();
   }, []);
 
   const solveBoard = (boardState) => {
@@ -201,7 +220,9 @@ const Main = () => {
         </BoardContainer>
       </BodyContainer>
 
-      <FooterContainer>{/* <button>Reset board</button> */}</FooterContainer>
+      <FooterContainer>
+        <Button onClick={initializeBoardState}>Reset board</Button>
+      </FooterContainer>
     </Container>
   );
 };

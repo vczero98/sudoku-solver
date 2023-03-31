@@ -9,4 +9,4 @@ Upcoming features:
 - [ ] Tutorial when first using the app
 - [ ] Settings for autofill
 - [x] Make responsive for all devices
-- [ ] Reset button
+- [x] Reset button
